@@ -1,0 +1,7 @@
+django<1.6
+fabric
+boto
+psycopg2
+python-memcached
+pytz
+uwsgi
