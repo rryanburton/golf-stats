@@ -1,0 +1,33 @@
+{% load browserid %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+          rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    {% block css %}{% endblock %}
+</head>
+<body>
+{% browserid_info %}
+<div class="container">
+
+    <div class="authentication">
+        {% if user.is_authenticated %}
+            {% browserid_logout text='Logout' %}
+        {% else %}
+            {% browserid_login text='Login' %}
+        {% endif %}
+    </div>
+
+    {% block content %}{% endblock %}
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+{% browserid_js %}
+{% block js %}{% endblock %}
+</body>
+</html>

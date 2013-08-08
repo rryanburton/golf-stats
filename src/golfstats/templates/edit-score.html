@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1><a href="{% url 'teams' event.id %}">{{ event }}</a></h1>
+    <h2><a href="{% url 'scores' event.id team.id %}">{{ team }}</a></h2>
+    edit score
+
+{% endblock %}

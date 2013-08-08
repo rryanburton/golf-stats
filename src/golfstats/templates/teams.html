@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}tablesorter/css/theme.bootstrap.css">
+{% endblock %}
+{% block content %}
+    <h1><a href="{% url 'teams' event.id %}">{{ event }}</a></h1>
+    <table id='teams'>
+        <thead>
+        <tr>
+            <th>Team</th>
+            <th>Subtotal</th>
+            <th>Handicap</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for team in teams %}
+            <tr>
+                <td><a href="{% url 'scores' team.event.id team.id %}">{{ team }}</a></td>
+                <td>{{ team.subtotal }}</td>
+                <td>{{ team.handicap }}</td>
+                <td>{{ team.total }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.10.8/jquery.tablesorter.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.10.8/jquery.tablesorter.widgets.min.js"></script>
+    <script>
+        $(function () {
+
+            $.extend($.tablesorter.themes.bootstrap, {
+                table: 'table table-bordered',
+                header: 'bootstrap-header', // give the header a gradient background
+                sortNone: 'bootstrap-icon-unsorted',
+                sortAsc: 'icon-chevron-up',
+                sortDesc: 'icon-chevron-down'
+            });
+
+            $("table").tablesorter({
+                theme: "bootstrap",
+                widthFixed: false,
+                headerTemplate: '{content} {icon}',
+                widgets: [ "uitheme", "zebra" ]
+            });
+
+        });
+    </script>
+{% endblock %}

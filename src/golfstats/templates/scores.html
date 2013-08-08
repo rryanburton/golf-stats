@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}tablesorter/css/theme.bootstrap.css">
+{% endblock %}
+{% block content %}
+    <h1><a href="{% url 'teams' event.id %}">{{ event }}</a></h1>
+    <h2>{{ team }}</h2>
+    <table id='teams'>
+        <thead>
+        <tr>
+            <th>Hole</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for score in scores %}
+            <tr>
+                <td><a href="{% url 'edit-score' event.id team.id score.id %}">{{ score.hole }}</a></td>
+                <td>{{ score.score }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Un-Scored holes</h3>
+    <ul>
+        {% for hole in holes %}
+            <li><a href="{% url 'add-score' event.id team.id hole.id %}">{{ hole }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <hr/>
+    <h2>Players</h2>
+    <table id='users'>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in team.users.all %}
+            <tr>
+                <td>{{ user.get_full_name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block js %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.10.8/jquery.tablesorter.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.10.8/jquery.tablesorter.widgets.min.js"></script>
+    <script>
+        $(function () {
+
+            $.extend($.tablesorter.themes.bootstrap, {
+                table: 'table table-bordered',
+                header: 'bootstrap-header', // give the header a gradient background
+                sortNone: 'bootstrap-icon-unsorted',
+                sortAsc: 'icon-chevron-up',
+                sortDesc: 'icon-chevron-down'
+            });
+
+            $("table").tablesorter({
+                theme: "bootstrap",
+                widthFixed: false,
+                headerTemplate: '{content} {icon}',
+                widgets: [ "uitheme", "zebra" ]
+            });
+
+        });
+    </script>
+{% endblock %}
