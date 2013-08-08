@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
+from golfstats.forms import EditScoreForm
 from golfstats.models import Event, Team, Score, Hole
 
 
@@ -36,7 +38,17 @@ def edit_score(request, event_id, team_id, score_id):
     event = Event.objects.filter(team__users=request.user, id=event_id)[0]
     team = Team.objects.get(event=event, id=team_id)
     score = Score.objects.get(team=team, id=score_id)
-    return render(request, 'edit-score.html', {'score': score, 'event': event, 'team': team})
+
+    if request.method == 'POST':
+        form = EditScoreForm(request.POST, instance=score)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Saved')
+            return redirect(reverse('scores', args=[event.id, team.id]))
+    else:
+        form = EditScoreForm(instance=score)
+
+    return render(request, 'edit-score.html', {'score': score, 'event': event, 'team': team, 'form': form})
 
 
 @login_required()

@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'crispy_forms',
     'golfstats',
 )
 
@@ -173,6 +174,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django_browserid.context_processors.browserid',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 if DEBUG:
     SITE_URL = 'http://localhost:8000'

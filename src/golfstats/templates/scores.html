@@ -22,12 +22,14 @@
         </tbody>
     </table>
 
-    <h3>Un-Scored holes</h3>
-    <ul>
-        {% for hole in holes %}
-            <li><a href="{% url 'add-score' event.id team.id hole.id %}">{{ hole }}</a></li>
-        {% endfor %}
-    </ul>
+    {% if holes|length %}
+        <h3>Un-Scored holes</h3>
+        <ul>
+            {% for hole in holes %}
+                <li><a href="{% url 'add-score' event.id team.id hole.id %}">{{ hole }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     <hr/>
     <h2>Players</h2>
