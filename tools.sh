@@ -128,6 +128,12 @@ gen-icons)
     inkscape --export-png=src/static/logo.png --export-width=32 --export-height=32 $PROJECT_NAME.svg
     ;;
 
+bootstrap)
+
+    virtualenv $VENV
+    $VPIP install fabric
+    ;;
+
 bare-metal-init)
     $VFAB -f $FABFILE -H $2 bare-metal-init
     ;;
@@ -156,11 +162,6 @@ restart_supervisor)
     $VFAB -f $FABFILE -H $PROJECT_NAME@$DEPLOY_HOST restart_supervisor:program=$PROGRAM
     ;;
 
-newrelic_deploy)
-    DEPLOY_HOST=$2
-    SETTINGS=$3
-    $VFAB -f $FABFILE -H $PROJECT_NAME@$DEPLOY_HOST newrelic_deploy:settings=$SETTINGS
-    ;;
 
 *) echo 'No option set'
     exit 0;
