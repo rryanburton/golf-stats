@@ -8,18 +8,18 @@
         <thead>
         <tr>
             <th>Team</th>
-            <th>Subtotal</th>
-            <th>Handicap</th>
-            <th>Total</th>
+            <th>Score</th>
+            <th>Strokes</th>
+            <th>Holes</th>
         </tr>
         </thead>
         <tbody>
         {% for team in teams %}
             <tr>
                 <td><a href="{% url 'scores' team.event.id team.id %}">{{ team }}</a></td>
-                <td>{{ team.subtotal }}</td>
-                <td>{{ team.handicap }}</td>
-                <td>{{ team.total }}</td>
+                <td>{{ team.score }}</td>
+                <td>{{ team.strokes }}</td>
+                <td>{{ team.holes }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -44,7 +44,8 @@
                 theme: "bootstrap",
                 widthFixed: false,
                 headerTemplate: '{content} {icon}',
-                widgets: [ "uitheme", "zebra" ]
+                widgets: [ "uitheme", "zebra" ],
+                sortList: [[1,0], [0,0]]
             });
 
         });

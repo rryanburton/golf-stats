@@ -35,8 +35,14 @@ class EventAdmin(admin.ModelAdmin):
 admin.site.register(Event, EventAdmin)
 
 
+class ScoreInline(admin.TabularInline):
+    model = Score
+
+
 class TeamAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        ScoreInline,
+    ]
 
 
 admin.site.register(Team, TeamAdmin)

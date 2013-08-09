@@ -34,14 +34,26 @@ class Team(models.Model):
     handicap = models.IntegerField()
     users = models.ManyToManyField(User)
 
-    def __unicode__(self):
-        return self.name
+    class Meta:
+        pass
 
-    def subtotal(self):
+    def __unicode__(self):
+        if self.handicap:
+            return '%s (%s)' % (self.name, self.handicap)
+        else:
+            return self.name
+
+    def strokes(self):
         return self.score_set.aggregate(total=Sum('score'))['total']
 
-    def total(self):
-        return self.subtotal() - self.handicap
+    def par(self):
+        return self.score_set.aggregate(total=Sum('hole__par'))['total']
+
+    def score(self):
+        return self.strokes() - self.par()
+
+    def holes(self):
+        return self.score_set.count()
 
 
 class Score(models.Model):
