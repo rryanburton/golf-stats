@@ -44,6 +44,8 @@ class TeamAdmin(admin.ModelAdmin):
         ScoreInline,
     ]
 
+    list_filter = ['event']
+
 
 admin.site.register(Team, TeamAdmin)
 

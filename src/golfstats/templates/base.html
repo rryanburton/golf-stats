@@ -19,7 +19,7 @@
             {% browserid_logout text='Logout' %}
 
             {% if user.is_superuser %}
-                <a href="/admin/">Admin Interface</a>
+                | <a href="/admin/">Admin Interface</a>
             {% endif %}
         {% else %}
             {% browserid_login text='Login' %}
